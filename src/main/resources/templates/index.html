@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Working Hours Calculator</title>
+ 
+<link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calcolo ore lavorative</h1>
+        <hr>
+        <h2>Inserisci orario</h2>
+ 
+ 		<form action="#" th:action ="@{/index}" th:object="${workingDay}" method="post">
+		    <div>
+			    <label class="">Giorno</label>
+			    <input type="date" th:field="*{workDate}" class="form-control mb-4 col-4"/>
+		    </div>
+		    <div>
+	            <label class="">Ora inizio</label>
+	            <input type="time" th:field="*{startHour}" class="form-control mb-4 col-4"/>
+		    </div>
+		    <div>
+	            <label class="">Ora fine</label>
+	            <input type="time" th:field="*{endHour}" class="form-control mb-4 col-4"/>
+		    </div>
+		    <select th:field="*{workType}">
+			  <option th:each="type : ${workTypes}" 
+			          th:value="${type}" 
+			          th:text="${type}">Tipologia</option>
+			</select>
+		    <div>
+	            <input type="submit" value="save" name="action" class="btn btn-info col-2"/>
+		    </div>
+		    <div>
+	            <input type="submit" value="saveall" name="action" class="btn btn-info col-2">
+		    </div>
+		</form>
+		<th:block th:if="${workedList}">
+	    	<h2>Ore salvate</h2>
+	    	 <table class="table">
+			    <thead>
+			      <tr>Giorno</tr>
+			      <tr>Inizio</tr>
+			      <tr>Fine</tr>
+			      <tr>Tipologia</tr>
+			      <tr></tr>
+		      	</thead>
+		      	<tbody>
+			    	<th:block th:each="daySaved : ${workedList}">
+			    		<tr>
+					        <td th:utext="${daySaved.workDate}"></td>
+					        <td th:utext="${daySaved.startHour}"></td>
+					        <td th:utext="${daySaved.endHour}"></td>
+					        <td th:utext="${daySaved.workType}"></td>
+					        <td><input type="submit" value="delete" name="action" class="btn btn-info col-2"/></td>
+			    		</tr>
+				    </th:block>
+		      	</tbody>
+		</th:block>
+    </div>
+</body>
+</html>
